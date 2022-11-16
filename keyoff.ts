@@ -13,3 +13,13 @@ type NumberKeys = keyof number; // "toString" | "valueOf" | "toFixed" | "toExpon
 
 type SymbolKeys = keyof symbol; 
 //typeof Symbol.toPrimitive | typeof Symbol.toStringTag | "toString" | "valueOf"
+
+//example 3
+interface MovieCharacter {
+    firstname: string;
+    name: string;
+    movie: string;
+  }
+  
+  type characterProps = keyof MovieCharacter;
+  
