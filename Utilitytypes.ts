@@ -77,3 +77,35 @@ function draw() {
 
 // Readonly<T>
 // This marks all the properties of input type T as readonly. Here is an example of this transformation:
+type Point1 = {x: number , y: number};
+type ReadonlyPoint = Readonly<Point1>;
+
+// This is useful for the common pattern of freezing an object to prevent edits. For example:
+function makeReadonly<T>(object: T): Readonly<T> {
+    return Object.freeze({ ...object });
+  }
+  
+  const editablePoint = { x: 0, y: 0 };
+  editablePoint.x = 2; // Success: allowed
+  
+  const readonlyPoint = makeReadonly(editablePoint);
+  readonlyPoint.x = 3; // Error: readonly
+
+//   Pick<T, Keys>
+// Picks only the specified Keys from T. In the following code, we have a Point3D with keys 'x' | 'y' | 'z', and we can create a Point2D by only picking the keys 'x' | 'y' :
+type CSSProperties = {
+    color?: string,
+    backgroundColor?: string,
+    width?: number,
+    height?: number,
+    // ... lots more
+  };
+  
+  function setSize(
+    element: HTMLElement,
+    // Usage: Just need the size properties
+    size: Pick<CSSProperties, 'width' | 'height'>
+  ) {
+    element.setAttribute('width', (size.width ?? 0) + 'px');
+    element.setAttribute('height', (size.height ?? 0) + 'px');
+  }
