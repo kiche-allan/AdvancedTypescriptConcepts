@@ -41,3 +41,39 @@ class State<T> {
 const state = new State({x:0, y:0});
 state.update({y: 123});
 console.log(state.value)
+
+// Required<T>
+// Required does the opposite of Partial<T>. It makes all the members of an input type T non-optional. In other words, it makes them required. Here is an example of this transformation:
+// A use case is when a type has optional members but portions of your code need all of them to be provided. You can have a config with optional members, but internally, you initialize them so you don’t have to handle null checking all your code:
+
+type CircleConfig = {
+    color?: string,
+    radius?: number,
+}
+
+class Circle {
+    private config: Required<CircleConfig>;
+
+    constructor(config: CircleConfig) {
+        this.config = {
+            color: config.color?? 'red',
+            radius: config.radius?? 10,
+        }
+    }
+
+
+draw(){
+    console.log(
+        'Drawing a ,circle.',
+        '   color:', this.config.color,
+        '   radius:', this.config.radius,
+    );
+}
+}
+
+function draw() {
+    throw new Error("Function not implemented.");
+}
+
+// Readonly<T>
+// This marks all the properties of input type T as readonly. Here is an example of this transformation:
